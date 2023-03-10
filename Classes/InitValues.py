@@ -3,21 +3,6 @@ class InitValues():
     output_path = "DataOutputFiles\\"
     merge_path = "MergeFiles\\"
 
-    input_file_names = [
-        # "Action_PriceList_2_1_2023_EN.csv",
-        # "eeteuroparts.csv",
-        "stock_export_full_for_zygimantas@ademi.lt.xml"
-    ]
-
-    merge_file_names =[
-        f"{output_path}Action_PriceList_2_1_2023_EN.csv.mod.csv",
-        f"{output_path}eeteuroparts.csv.mod.csv",
-        f"{output_path}stock_export_full_for_zygimantas@ademi.lt.mod.xml"
-    ]
-
-    merge_file_name = f"{merge_path}MergeFile.mod.csv"
-    filter_file_name = f"{merge_path}MergeFile.filter.csv"
-
     csv_header = [
         "EAN",
         "ITEM SKU",
