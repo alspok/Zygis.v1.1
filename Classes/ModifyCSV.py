@@ -89,6 +89,7 @@ class ModifyCSV():
 
         xml_dict_list =[]
         [xml_dict_list.append(dict(x)) for x in xml_dict['offer']['products']['product']]
+        
         with open(f"{iv.output_path}{file_name}.dict.txt", mode='w', encoding='utf-8') as dict_fh:
             pprint.pprint(xml_dict_list, stream=dict_fh)
 
