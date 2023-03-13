@@ -89,8 +89,27 @@ class ModifyCSV():
 
         xml_dict_list =[]
         [xml_dict_list.append(dict(x)) for x in xml_dict['offer']['products']['product']]
-        
+
+        mod_dict_list = []
+        for item in xml_dict_list:
+            sub_dict_list = {}
+            try:
+                sub_dict_list['EAN'] = item['sizes']['size']['@iaiext:code_external']
+                sub_dict_list['ITEM SKU'] = item['sizes']['size']['@code_producer']
+                sub_dict_list['BRAND NAME'] = item['producer']['@name']
+                sub_dict_list['PRODUCT NAME'] = item['description']['name'][0]['#text']
+                sub_dict_list['REQUIRED PRICE TO AMAZON'] = float(item['price']['@net']) * iv.low_increase_price
+            except KeyError:
+                continue
+
+            if sub_dict_list['REQUIRED PRICE TO AMAZON'] > 0:
+                mod_dict_list.append(sub_dict_list)
+            else:
+                continue
+
+        pass
+
         with open(f"{iv.output_path}{file_name}.dict.txt", mode='w', encoding='utf-8') as dict_fh:
-            pprint.pprint(xml_dict_list, stream=dict_fh)
+            pprint.pprint(mod_dict_list, stream=dict_fh)
 
         pass

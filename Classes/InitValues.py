@@ -27,6 +27,13 @@ class InitValues():
         "Price"
     ]
 
+    xml_ademi_head = [
+       "['sizes']['size']['@iaiext:code_external']",
+
+
+        "['price']['@net']"
+    ]
+
     min_stock = 10
     min_price = 10
     threshold_price = 25.0
