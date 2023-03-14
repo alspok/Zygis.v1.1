@@ -43,7 +43,7 @@ class ModifyCSV():
     
     # Filie to modify DataInputFiles\eeteuroparts.csv
     def eeteuroparts(self, file_name: str) -> None:
-        with open(f"{iv.input_path}{file_name}", mode='r') as ssv_fh, \
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as ssv_fh, \
                 open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8') as csv_fh:
             for line in ssv_fh:
                 # mod_line = line.replace('\";\"', ',')
@@ -81,7 +81,7 @@ class ModifyCSV():
 
         pass
 
-     # Filie to modify DataInputFiles\stock_export_full_for_zygimantas@ademi.lt.xml
+     # File to modify DataInputFiles\stock_export_full_for_zygimantas@ademi.lt.xml
     def stockExportFull(self, file_name: str) -> None:
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as xml_fh:
             xml_date = xml_fh.read()
@@ -98,18 +98,36 @@ class ModifyCSV():
                 sub_dict_list['ITEM SKU'] = item['sizes']['size']['@code_producer']
                 sub_dict_list['BRAND NAME'] = item['producer']['@name']
                 sub_dict_list['PRODUCT NAME'] = item['description']['name'][0]['#text']
-                sub_dict_list['REQUIRED PRICE TO AMAZON'] = float(item['price']['@net']) * iv.low_increase_price
+                sub_dict_list['REQUIRED PRICE TO AMAZON'] = float(item['price']['@net'])
+                sub_dict_list['STOCK'] = item['sizes']['size']['stock']['@available_stock_quantity']
             except KeyError:
                 continue
 
-            if sub_dict_list['REQUIRED PRICE TO AMAZON'] > 0:
-                mod_dict_list.append(sub_dict_list)
-            else:
+            if int(sub_dict_list['STOCK']) < iv.min_stock or sub_dict_list['REQUIRED PRICE TO AMAZON'] < iv.min_price:
                 continue
+            else:
+                if sub_dict_list['REQUIRED PRICE TO AMAZON'] <= iv.threshold_price:
+                    sub_dict_list['REQUIRED PRICE TO AMAZON'] *= iv.large_increase_price
+                    mod_dict_list.append(sub_dict_list)
+                else:
+                    sub_dict_list['REQUIRED PRICE TO AMAZON'] *= iv.low_increase_price
+                    mod_dict_list.append(sub_dict_list)
 
         pass
 
-        with open(f"{iv.output_path}{file_name}.dict.txt", mode='w', encoding='utf-8') as dict_fh:
-            pprint.pprint(mod_dict_list, stream=dict_fh)
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+            writer = csv.DictWriter(tcsv_fh, fieldnames=iv.csv_header)
+            writer.writeheader()
+            writer.writerows(mod_dict_list)
+
+
+    # File to modify FRAGNANCES.csv
+    def fragnances(self, file_name: str) -> None:
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh, \
+                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8') as wcsv_fh:
+            for line in csv_fh:
+                mod_line = line.replace(',', '.').replace(';', ',')
+                wcsv_fh.write(mod_line)
+
 
         pass

@@ -27,18 +27,11 @@ class InitValues():
         "Price"
     ]
 
-    xml_ademi_head = [
-       "['sizes']['size']['@iaiext:code_external']",
-
-
-        "['price']['@net']"
-    ]
-
-    min_stock = 10
-    min_price = 10
-    threshold_price = 25.0
-    low_increase_price = 1.4
-    large_increase_price = 1.8
+    min_stock = 2
+    min_price = 5
+    threshold_price = 55.0
+    low_increase_price = 1.42 # if price more then threshold
+    large_increase_price = 1.8 # if price less then thershold
 
 
 
