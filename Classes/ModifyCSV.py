@@ -129,5 +129,35 @@ class ModifyCSV():
                 mod_line = line.replace(',', '.').replace(';', ',')
                 wcsv_fh.write(mod_line)
 
+        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
+            dictReader_obj = csv.DictReader(ssv_fh)
+            sub_dict_list = []
+            for item in dictReader_obj:
+                if float(item['PRICE']) >= iv.min_price:
+                    sub_dict_list.append(item)
+        
+        msub_dict_list = []
+        for item in sub_dict_list:
+            sub_dict = {}
+            if item['EAN'] == '':
+                continue
+            else:
+                sub_dict['EAN'] = int(item['EAN'])
+        
+            sub_dict['ITEM SKU'] = item['id']
+            sub_dict['PRODUCT NAME'] = item['TITLE']
+            sub_dict['BRAND NAME'] = item['BRAND']
+            if float(item['PRICE']) <= float(iv.threshold_price):
+                sub_dict['REQUIRED PRICE TO AMAZON'] *= iv.large_increase_price
+            else:
+                sub_dict['REQUIRED PRICE TO AMAZON'] *= iv.low_increase_price
+
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+            writer = csv.DictWriter(tcsv_fh, fieldnames=iv.csv_header)
+            writer.writeheader()
+            writer.writerows(msub_dict_list)
+
+        pass
+
 
         pass
