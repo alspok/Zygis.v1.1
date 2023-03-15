@@ -144,20 +144,21 @@ class ModifyCSV():
             else:
                 sub_dict['EAN'] = int(item['EAN'])
         
-            sub_dict['ITEM SKU'] = item['id']
+            sub_dict['ITEM SKU'] = item['\ufeff"id"']
             sub_dict['PRODUCT NAME'] = item['TITLE']
             sub_dict['BRAND NAME'] = item['BRAND']
-            if float(item['PRICE']) <= float(iv.threshold_price):
-                sub_dict['REQUIRED PRICE TO AMAZON'] *= iv.large_increase_price
+            sub_dict['REQUIRED PRICE TO AMAZON'] = float(item['PRICE'])
+            if sub_dict['REQUIRED PRICE TO AMAZON'] <= float(iv.threshold_price):
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * iv.large_increase_price, 2)
             else:
-                sub_dict['REQUIRED PRICE TO AMAZON'] *= iv.low_increase_price
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * iv.low_increase_price, 2)
+            
+            if int(item['STOCK']) > iv.min_stock:
+                msub_dict_list.append(sub_dict)
 
         with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
             writer = csv.DictWriter(tcsv_fh, fieldnames=iv.csv_header)
             writer.writeheader()
             writer.writerows(msub_dict_list)
-
-        pass
-
 
         pass
