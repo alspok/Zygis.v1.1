@@ -99,21 +99,18 @@ class ModifyCSV():
                 sub_dict_list['BRAND NAME'] = item['producer']['@name']
                 sub_dict_list['PRODUCT NAME'] = item['description']['name'][0]['#text']
                 sub_dict_list['REQUIRED PRICE TO AMAZON'] = float(item['price']['@net'])
-                sub_dict_list['STOCK'] = item['sizes']['size']['stock']['@available_stock_quantity']
-            except KeyError:
-                continue
-
-            if int(sub_dict_list['STOCK']) < iv.min_stock or sub_dict_list['REQUIRED PRICE TO AMAZON'] < iv.min_price:
-                continue
-            else:
-                if sub_dict_list['REQUIRED PRICE TO AMAZON'] <= iv.threshold_price:
-                    sub_dict_list['REQUIRED PRICE TO AMAZON'] *= iv.large_increase_price
-                    mod_dict_list.append(sub_dict_list)
+                stock_value = int(float(item['sizes']['size']['stock']['@available_stock_quantity']))
+                if stock_value < iv.min_stock or sub_dict_list['REQUIRED PRICE TO AMAZON'] < float(iv.min_price):
+                    continue
                 else:
-                    sub_dict_list['REQUIRED PRICE TO AMAZON'] *= iv.low_increase_price
-                    mod_dict_list.append(sub_dict_list)
-
-        pass
+                    if sub_dict_list['REQUIRED PRICE TO AMAZON'] <= iv.threshold_price:
+                        sub_dict_list['REQUIRED PRICE TO AMAZON'] = round(sub_dict_list['REQUIRED PRICE TO AMAZON'] * iv.large_increase_price, 2)
+                        mod_dict_list.append(sub_dict_list)
+                    else:
+                        sub_dict_list['REQUIRED PRICE TO AMAZON'] = round(sub_dict_list['REQUIRED PRICE TO AMAZON'] * iv.low_increase_price, 2)
+                        mod_dict_list.append(sub_dict_list)
+            except:
+                pass
 
         with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
             writer = csv.DictWriter(tcsv_fh, fieldnames=iv.csv_header)
@@ -162,3 +159,34 @@ class ModifyCSV():
             writer.writerows(msub_dict_list)
 
         pass
+    # File to modify DataInputFiles\ProductCatalogue_20230319122946.csv
+    def productCatalogue_20230319122946(self, file_name: str) -> None:
+        incrase_price = 1.42
+
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh:
+            dictReader_obj = csv.DictReader(csv_fh)
+            sub_dict_list = []
+            for item in dictReader_obj:
+                sub_dict_list.append(item)
+
+        msub_dict_list = []
+        for item in sub_dict_list:
+            sub_dict = {}
+            try:
+                sub_dict['EAN'] = item['ItemEAN']
+                sub_dict['ITEM SKU'] = item['ItemPartNumber']
+                sub_dict['PRODUCT NAME'] = item['Name']
+                sub_dict['BRAND NAME'] = item['BrandName']
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett'] * incrase_price), 2)
+
+                msub_dict_list.append(sub_dict)
+            except:
+                pass
+            
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8') as mcsv_fh:
+            writer = csv.DictWriter(mcsv_fh, fieldnames=iv.csv_header)
+            writer.writeheader()
+            writer.writerows(msub_dict_list)
+
+        pass
+
