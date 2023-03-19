@@ -11,7 +11,8 @@ def FileConvert():
     # modifyCSV.stockExportFull("stock_export_full_for_zygimantas@ademi.lt.xml")
     # modifyCSV.fragnances("FRAGNANCES.csv")
     # modifyCSV.productCatalogue_20230319122946("ProductCatalogue_20230319122946.csv")
-    modifyCSV.b2bindividuelllive("b2bindividuelllive_b2bexport1de.csv")
+    # modifyCSV.b2bindividuelllive("b2bindividuelllive_b2bexport1de.csv")
+    modifyCSV.morele("morele_offer.xml")
 
 
     # MergeFiles().mergeFiles()

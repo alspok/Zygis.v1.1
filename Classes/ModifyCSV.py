@@ -245,4 +245,43 @@ class ModifyCSV():
             writer.writerows(msub_dict_list)
 
         pass
+
+    # File to modify DataInputFiles\morele_offer.xml
+    def morele(self, file_name: str) -> None:
+        threshold_price = 70.0
+        low_increase_price = 1.8 # if price more then threshold
+        large_increase_price = 1.42 # if price less then thershold
+
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as xml_fh:
+            xml_date = xml_fh.read()
+            xml_dict = xmltodict.parse(xml_date)
+
+        xml_dict_list =[]
+        [xml_dict_list.append(dict(x)) for x in xml_dict['products']['product']]
+
+        msub_dict_list = []
+        for item in xml_dict_list:
+            sub_dict = {}
+            try:
+                sub_dict['EAN'] = item['productEan']
+                sub_dict['ITEM SKU'] = item['productCode']
+                sub_dict['BRAND NAME'] = item['brandName']
+                sub_dict['PRODUCT NAME'] = item['productFullName']
+                sub_dict['REQUIRED PRICE TO AMAZON'] = float(item['productEuroPriceNetto'])
+
+                if sub_dict['REQUIRED PRICE TO AMAZON'] < threshold_price:
+                    sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * low_increase_price, 2)
+                else:
+                     sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * large_increase_price, 2)
+                    
+                msub_dict_list.append(sub_dict)
+            except:
+                pass
+
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as mcsv_fh:
+            writer = csv.DictWriter(mcsv_fh, fieldnames=iv.csv_header)
+            writer.writeheader()
+            writer.writerows(msub_dict_list)
+
+        pass
             
