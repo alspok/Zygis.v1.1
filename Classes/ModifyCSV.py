@@ -83,6 +83,10 @@ class ModifyCSV():
 
      # File to modify DataInputFiles\stock_export_full_for_zygimantas@ademi.lt.xml
     def stockExportFull(self, file_name: str) -> None:
+        threshold_price = 70.0
+        low_increase_price = 1.8 # if price more then threshold
+        large_increase_price = 1.42 # if price less then thershold
+
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as xml_fh:
             xml_date = xml_fh.read()
             xml_dict = xmltodict.parse(xml_date)
@@ -103,11 +107,11 @@ class ModifyCSV():
                 if stock_value < iv.min_stock or sub_dict_list['REQUIRED PRICE TO AMAZON'] < float(iv.min_price):
                     continue
                 else:
-                    if sub_dict_list['REQUIRED PRICE TO AMAZON'] <= iv.threshold_price:
-                        sub_dict_list['REQUIRED PRICE TO AMAZON'] = round(sub_dict_list['REQUIRED PRICE TO AMAZON'] * iv.large_increase_price, 2)
+                    if sub_dict_list['REQUIRED PRICE TO AMAZON'] <= threshold_price:
+                        sub_dict_list['REQUIRED PRICE TO AMAZON'] = round(sub_dict_list['REQUIRED PRICE TO AMAZON'] * large_increase_price, 2)
                         mod_dict_list.append(sub_dict_list)
                     else:
-                        sub_dict_list['REQUIRED PRICE TO AMAZON'] = round(sub_dict_list['REQUIRED PRICE TO AMAZON'] * iv.low_increase_price, 2)
+                        sub_dict_list['REQUIRED PRICE TO AMAZON'] = round(sub_dict_list['REQUIRED PRICE TO AMAZON'] * low_increase_price, 2)
                         mod_dict_list.append(sub_dict_list)
             except:
                 pass
@@ -163,30 +167,82 @@ class ModifyCSV():
     def productCatalogue_20230319122946(self, file_name: str) -> None:
         incrase_price = 1.42
 
-        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh:
-            dictReader_obj = csv.DictReader(csv_fh)
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding = 'unicode_escape') as csv_fh, \
+                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+            for line in csv_fh:
+                mod_line = line.replace(',', '.').replace(';', ',')
+                tcsv_fh.write(mod_line)
+
+        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh:
+            dictReader_obj = csv.DictReader(temp_csv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
                 sub_dict_list.append(item)
 
-        msub_dict_list = []
-        for item in sub_dict_list:
-            sub_dict = {}
-            try:
-                sub_dict['EAN'] = item['ItemEAN']
-                sub_dict['ITEM SKU'] = item['ItemPartNumber']
-                sub_dict['PRODUCT NAME'] = item['Name']
-                sub_dict['BRAND NAME'] = item['BrandName']
-                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett'] * incrase_price), 2)
+            msub_dict_list = []
+            for item in sub_dict_list:
+                sub_dict = {}
+                try:
+                    sub_dict['EAN'] = item['ItemEAN']
+                    sub_dict['ITEM SKU'] = item['ItemPartNumber']
+                    sub_dict['PRODUCT NAME'] = item['Name']
+                    sub_dict['BRAND NAME'] = item['BrandName']
+                    sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett']) * incrase_price, 2)
+                    # sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett'] * incrase_price), 2)
 
-                msub_dict_list.append(sub_dict)
-            except:
-                pass
+                    msub_dict_list.append(sub_dict)
+                except:
+                    pass
             
-        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8') as mcsv_fh:
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as mcsv_fh:
             writer = csv.DictWriter(mcsv_fh, fieldnames=iv.csv_header)
             writer.writeheader()
             writer.writerows(msub_dict_list)
 
         pass
 
+    # File to nodify DataInputFiles\b2bindividuelllive_b2bexport1de.csv
+    def b2bindividuelllive(self, file_name: str) -> None:
+        threshold_price = 70.0
+        low_increase_price = 1.8 # if price more then threshold
+        large_increase_price = 1.42 # if price less then thershold
+
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding = 'unicode_escape') as csv_fh, \
+                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+            for line in csv_fh:
+                mod_line = line.replace(',', '.').replace(';', ',')
+                tcsv_fh.write(mod_line)
+
+        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh:
+            dictReader_obj = csv.DictReader(temp_csv_fh)
+            sub_dict_list = []
+            for item in dictReader_obj:
+                sub_dict_list.append(item)
+
+            msub_dict_list = []
+            for item in sub_dict_list:
+                sub_dict = {}
+                try:
+                    sub_dict['EAN'] = item['products_ean']
+                    sub_dict['ITEM SKU'] = item['SKU']
+                    sub_dict['PRODUCT NAME'] = item['productName']
+                    sub_dict['BRAND NAME'] = item['manufacturer']
+                    sub_dict['REQUIRED PRICE TO AMAZON'] = float(item['NetPrice'])
+                    # stock_value = int(item['stock'])
+
+                    if sub_dict['REQUIRED PRICE TO AMAZON'] < threshold_price:
+                        sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * low_increase_price, 2)
+                    else:
+                        sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * large_increase_price, 2)
+                    
+                    msub_dict_list.append(sub_dict)
+                except:
+                    pass
+
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf-8', newline='') as mcsv_fh:
+            writer = csv.DictWriter(mcsv_fh, fieldnames=iv.csv_header)
+            writer.writeheader()
+            writer.writerows(msub_dict_list)
+
+        pass
+            
