@@ -28,10 +28,11 @@ class InitValues():
     ]
 
     min_stock = 2
-    min_price = 5
+    min_price = 5.0
     threshold_price = 55.0
-    low_increase_price = 1.42 # if price more then threshold
-    large_increase_price = 1.8 # if price less then thershold
+    low_increase_price = 1.63 # if price more then threshold
+    large_increase_price = 1.98 # if price less then thershold
+    uniform_increase_price = 2.3
 
 
 

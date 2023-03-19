@@ -9,7 +9,8 @@ def FileConvert():
     # modifyCSV.actionPrice("Action_PriceList_2_1_2023_EN.csv")
     # modifyCSV.eeteuroparts("eeteuroparts.csv")
     # modifyCSV.stockExportFull("stock_export_full_for_zygimantas@ademi.lt.xml")
-    modifyCSV.fragnances("FRAGNANCES.csv")
+    # modifyCSV.fragnances("FRAGNANCES.csv")
+    modifyCSV.productCatalogue_20230319122946("ProductCatalogue_20230319122946.csv")
 
 
     # MergeFiles().mergeFiles()
