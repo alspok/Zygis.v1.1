@@ -272,7 +272,7 @@ class ModifyCSV():
                 if sub_dict['REQUIRED PRICE TO AMAZON'] < threshold_price:
                     sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * low_increase_price, 2)
                 else:
-                     sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * large_increase_price, 2)
+                    sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * large_increase_price, 2)
                     
                 msub_dict_list.append(sub_dict)
             except:
