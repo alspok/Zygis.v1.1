@@ -28,10 +28,10 @@ class InitValues():
     ]
 
     merge_file_names = [
-        "b2bindividuelllive_b2bexport1de.csv.mod.csv",
-        "morele_offer.xml.mod.csv",
-        "ProductCatalogue_20230319122946.csv.mod.csv",
-        "stock_export_full_for_zygimantas@ademi.lt.xml.mod.csv"
+        "b2bindividuelllive_b2bexport1de.csv.mod.csv", # NOTEBOOKBILINGER
+        "morele_offer.xml.mod.csv", # MORELE
+        "ProductCatalogue_20230319122946.csv.mod.csv", # EPTIMO
+        "stock_export_full_for_zygimantas@ademi.lt.xml.mod.csv" # INPRO
     ]
 
     min_stock = 2
