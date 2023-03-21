@@ -27,6 +27,13 @@ class InitValues():
         "Price"
     ]
 
+    merge_file_names = [
+        "b2bindividuelllive_b2bexport1de.csv.mod.csv",
+        "morele_offer.xml.mod.csv",
+        "ProductCatalogue_20230319122946.csv.mod.csv",
+        "stock_export_full_for_zygimantas@ademi.lt.xml.mod.csv"
+    ]
+
     min_stock = 2
     min_price = 5.0
     threshold_price = 55.0
