@@ -34,6 +34,7 @@ class InitValues():
         "DataOutputFiles\\stock_export_full_for_zygimantas@ademi.lt.xml.mod.csv" # INPRO
     ]
     merge_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.merge.csv"
+    filter_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.filter.csv"
 
     min_stock = 2
     min_price = 5.0
