@@ -12,10 +12,10 @@ def FileConvert():
     # modifyCSV.fragnances("FRAGNANCES.csv")
     # modifyCSV.productCatalogue_20230319122946("ProductCatalogue_20230319122946.csv")
     # modifyCSV.b2bindividuelllive("b2bindividuelllive_b2bexport1de.csv")
-    modifyCSV.morele("morele_offer.xml")
+    # modifyCSV.morele("morele_offer.xml")
 
 
-    # MergeFiles().mergeFiles()
+    MergeFiles().mergeCSVFiles()
     # FilterCSV().filterCSV()
 
 if __name__ == "__main__":
