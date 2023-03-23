@@ -15,7 +15,7 @@ def FileConvert():
     # modifyCSV.morele("morele_offer.xml")
 
 
-    # MergeFiles().mergeCSVFiles()
+    MergeFiles().mergeCSVFiles()
     FilterCSV().filterCSV()
 
 if __name__ == "__main__":
