@@ -35,12 +35,13 @@ class FilterCSV():
 
             field_list = []
             for item in dictReader_obj:
-                field_list.append(item['EAN'])
+                field_list.append(item['REQUIRED PRICE TO AMAZON'])
 
         count_dict = {}
         for item in field_list:
             count = field_list.count(item)
-            if count > 1:
+            if count > 170:
+                print(item, count)
                 count_dict[item] = count
 
         pass

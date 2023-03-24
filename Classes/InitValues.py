@@ -35,7 +35,6 @@ class InitValues():
     ]
     merge_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.merge.csv"
     filter_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.filter.csv"
-    try_filter_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.tryfilter.csv"
 
     min_stock = 2
     min_price = 5.0
