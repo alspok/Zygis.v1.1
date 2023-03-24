@@ -27,3 +27,20 @@ class FilterCSV():
             writer.writerows(fsub_dict_list)
 
         pass
+
+    # Count keys in dictionary
+    def countCSV(self) -> None:
+        with open(iv.filter_file_name, mode='r', encoding='utf-8') as fcsv_fh:
+            dictReader_obj = csv.DictReader(fcsv_fh)
+
+            field_list = []
+            for item in dictReader_obj:
+                field_list.append(item['EAN'])
+
+        count_dict = {}
+        for item in field_list:
+            count = field_list.count(item)
+            if count > 1:
+                count_dict[item] = count
+
+        pass
