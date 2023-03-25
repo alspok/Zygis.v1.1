@@ -3,6 +3,7 @@ from Classes.InitValues import InitValues as iv
 
 class FilterCSV():
 
+    # Filter CSV file using particular fiel
     def filterCSV(self) -> None:
         with open(iv.merge_file_name, mode='r', encoding='utf-8') as mfh:
             dictReader_obj = csv.DictReader(mfh)
