@@ -1,6 +1,7 @@
 class InitValues():
     input_path = "DataInputFiles\\"
     output_path = "DataOutputFiles\\"
+    temp_output_path = "DataOutputTempFiles\\"
     merge_path = "MergeFiles\\"
 
     csv_header = [
