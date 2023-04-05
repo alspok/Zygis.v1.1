@@ -44,13 +44,13 @@ class ModifyCSV():
     # Filie to modify DataInputFiles\eeteuroparts.csv
     def eeteuroparts(self, file_name: str) -> None:
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as ssv_fh, \
-                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8') as csv_fh:
+                open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8') as csv_fh:
             for line in ssv_fh:
                 # mod_line = line.replace('\";\"', ',')
                 mod_line = line.replace(',', '.').replace(';', ',')
                 csv_fh.write(mod_line)
 
-        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
+        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
             dictReader_obj = csv.DictReader(ssv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
@@ -125,12 +125,12 @@ class ModifyCSV():
     # File to modify FRAGNANCES.csv
     def fragnances(self, file_name: str) -> None:
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh, \
-                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8') as wcsv_fh:
+                open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8') as wcsv_fh:
             for line in csv_fh:
                 mod_line = line.replace(',', '.').replace(';', ',')
                 wcsv_fh.write(mod_line)
 
-        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
+        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
             dictReader_obj = csv.DictReader(ssv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
@@ -167,12 +167,12 @@ class ModifyCSV():
     # 
     def fragnancesSelect(self, file_name: str) -> None:
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh, \
-                open(f"{iv.output_path}{file_name}.selected.temp.csv", mode='w', encoding='utf-8', newline='') as wcsv_fh:
+                open(f"{iv.temp_output_path}{file_name}.selected.temp.csv", mode='w', encoding='utf-8', newline='') as wcsv_fh:
             for line in csv_fh:
                 mod_line = line.replace(',', '.').replace(';', ',')
                 wcsv_fh.write(mod_line)
 
-        with open(f"{iv.output_path}{file_name}.selected.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
+        with open(f"{iv.temp_output_path}{file_name}.selected.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
             dictReader_obj = csv.DictReader(ssv_fh)
             item_select = []
             selected_list = []
@@ -195,12 +195,12 @@ class ModifyCSV():
         incrase_price = 1.42
 
         with open(f"{iv.input_path}{file_name}", mode='r', encoding = 'unicode_escape') as csv_fh, \
-                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+                open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
             for line in csv_fh:
                 mod_line = line.replace(',', '.').replace(';', ',')
                 tcsv_fh.write(mod_line)
 
-        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh:
+        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh:
             dictReader_obj = csv.DictReader(temp_csv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
@@ -235,12 +235,12 @@ class ModifyCSV():
         large_increase_price = 1.42 # if price less then thershold
 
         with open(f"{iv.input_path}{file_name}", mode='r', encoding = 'unicode_escape') as csv_fh, \
-                open(f"{iv.output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+                open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
             for line in csv_fh:
                 mod_line = line.replace(',', '.').replace(';', ',')
                 tcsv_fh.write(mod_line)
 
-        with open(f"{iv.output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh:
+        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh:
             dictReader_obj = csv.DictReader(temp_csv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
