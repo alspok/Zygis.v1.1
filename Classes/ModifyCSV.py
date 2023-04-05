@@ -163,6 +163,33 @@ class ModifyCSV():
             writer.writerows(msub_dict_list)
 
         pass
+
+    # 
+    def fragnancesSelect(self, file_name: str) -> None:
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh, \
+                open(f"{iv.output_path}{file_name}.selected.temp.csv", mode='w', encoding='utf-8', newline='') as wcsv_fh:
+            for line in csv_fh:
+                mod_line = line.replace(',', '.').replace(';', ',')
+                wcsv_fh.write(mod_line)
+
+        with open(f"{iv.output_path}{file_name}.selected.temp.csv", mode='r', encoding='utf-8') as ssv_fh:
+            dictReader_obj = csv.DictReader(ssv_fh)
+            item_select = []
+            selected_list = []
+            for item in dictReader_obj:
+                if item["BRAND"] not in item_select:
+                    item_select.append(item["BRAND"])
+                    del item['\ufeff"id"']
+                    del item[""]
+                    selected_list.append(item)
+
+        with open(f"{iv.output_path}{file_name}.selected.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+            writer = csv.DictWriter(tcsv_fh, fieldnames=iv.csv_fregrances_head)
+            writer.writeheader()
+            writer.writerows(selected_list)
+
+        pass
+
     # File to modify DataInputFiles\ProductCatalogue_20230319122946.csv
     def productCatalogue_20230319122946(self, file_name: str) -> None:
         incrase_price = 1.42

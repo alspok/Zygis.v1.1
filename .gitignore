@@ -4,6 +4,8 @@ DataOutputFiles/*
 !DataOutputFiles/.gitkeep
 MergeFiles/*
 !MergeFiles/.gitkeep
+DataOutputTempFiles/*
+!DataOutputTempFiles/.gitkeep
 **/__pycache__/
 
 .venv/Lib/site-packages/setuptools/_distutils/command/py37compat.py

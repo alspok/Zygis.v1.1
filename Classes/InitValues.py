@@ -27,6 +27,25 @@ class InitValues():
         "Price"
     ]
 
+    csv_fregrances_head = [
+        "BRAND",
+        "TITLE",
+        "TYPE",
+        "SEX",
+        "VOLUME",
+        "NOTE",
+        "SET",
+        "STOCK",
+        "PRICE",
+        "CURRENCY",
+        "NEWS",
+        "BACK IN",
+        "EAN",
+        "TESTER",
+        "DAMAGED",
+        "SHADE",
+    ]
+
     merge_file_names = [
         "DataOutputFiles\\b2bindividuelllive_b2bexport1de.csv.mod.csv", # NOTEBOOKBILINGER
         "DataOutputFiles\\morele_offer.xml.mod.csv", # MORELE
