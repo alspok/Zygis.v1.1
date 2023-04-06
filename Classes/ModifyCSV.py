@@ -165,7 +165,7 @@ class ModifyCSV():
         pass
 
     # 
-    def fragnancesSelect(self, file_name: str) -> None:
+    def fragnancesSelect(self, file_name: str, column_name: str) -> None:
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh, \
                 open(f"{iv.temp_output_path}{file_name}.selected.temp.csv", mode='w', encoding='utf-8', newline='') as wcsv_fh:
             for line in csv_fh:
@@ -177,7 +177,7 @@ class ModifyCSV():
             item_select = []
             selected_list = []
             for item in dictReader_obj:
-                if item["BRAND"] not in item_select:
+                if item[column_name] not in item_select:
                     item_select.append(item["BRAND"])
                     del item['\ufeff"id"']
                     del item[""]
