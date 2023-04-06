@@ -17,7 +17,7 @@ def FileConvert():
     # MergeFiles().mergeCSVFiles()
     # FilterCSV().filterCSV()
     # FilterCSV().countCSV()
-    modifyCSV.fragnancesSelect("fragnances.csv")
+    modifyCSV.fragnancesSelect("fragnances.csv", "BRAND")
 
 
 if __name__ == "__main__":
