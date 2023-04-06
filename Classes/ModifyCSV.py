@@ -166,6 +166,13 @@ class ModifyCSV():
 
     # 
     def fragnancesSelect(self, file_name: str, column_name: str) -> None:
+        """
+        Args:
+            file_name (str): csv file name .
+            column_name (str): column name to select in csv file.
+        Returns:
+            None. Save results in file.
+        """
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh, \
                 open(f"{iv.temp_output_path}{file_name}.selected.temp.csv", mode='w', encoding='utf-8', newline='') as wcsv_fh:
             for line in csv_fh:
