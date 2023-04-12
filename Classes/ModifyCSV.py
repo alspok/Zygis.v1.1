@@ -257,17 +257,26 @@ class ModifyCSV():
                 tcsv_fh.write(mod_line)
 
         with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh, \
-             open(f"{iv.temp_output_path}{ext_file_name}", mode='r', encoding='unicode_escate') as ext_csv_fh:
+             open(f"{iv.input_path}{ext_file_name}", mode='r', encoding='unicode_escape') as ext_csv_fh:
             dictReader_obj = csv.DictReader(temp_csv_fh)
             dictReader_ext_obj = csv.DictReader(ext_csv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
                 for eitem in dictReader_ext_obj:
                     if item['ItemEAN'] == eitem['ItemEAN']:
-                        sub_dict_list.append(item + eitem['ItemEAN'])
+                        item['STOCK'] = int(float(eitem['AvailableQty']))
+                        sub_dict_list.append(item)
+                        break
                     else:
-                        eitem['ItemEAN'] = 0
-                        sub_dict_list.append(item + eitem['ItemEAN'])
+                        item['STOCK'] = 0
+                        sub_dict_list.append(item)
+                        break
+
+            for item in sub_dict_list:
+                nr = 1
+                if item['STOCK'] == 0:
+                    print (nr, item['ItemEAN'], item['STOCK'])
+                    nr += 1
 
             msub_dict_list = []
             for item in sub_dict_list:

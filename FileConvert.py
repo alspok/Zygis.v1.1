@@ -17,7 +17,8 @@ def FileConvert():
     # MergeFiles().mergeCSVFiles()
     # FilterCSV().filterCSV()
     # FilterCSV().countCSV()
-    modifyCSV.fragnancesSelect("fragnances.csv", "BRAND")
+    # modifyCSV.fragnancesSelect("fragnances.csv", "BRAND")
+    modifyCSV.eptimo('EPTIMO.csv', 'EPTIMO_InventoryReport_20230412191230.csv')
 
 
 if __name__ == "__main__":
