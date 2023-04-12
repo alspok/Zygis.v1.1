@@ -47,6 +47,10 @@ class InitValues():
         "SHADE",
     ]
 
+    csv_eptimo_head = [
+        
+    ]
+
     merge_file_names = [
         "DataOutputFiles\\b2bindividuelllive_b2bexport1de.csv.mod.csv", # NOTEBOOKBILINGER
         "DataOutputFiles\\morele_offer.xml.mod.csv", # MORELE
