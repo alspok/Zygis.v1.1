@@ -48,7 +48,13 @@ class InitValues():
     ]
 
     csv_eptimo_head = [
-        
+        "EAN",
+        "ITEM SKU",
+        "PRODUCT NAME",
+        "BRAND NAME",
+        "ORIGINAL PRICE",
+        "REQUIRED PRICE TO AMAZON",
+        "STOCK"
     ]
 
     merge_file_names = [

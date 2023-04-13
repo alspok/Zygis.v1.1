@@ -246,37 +246,15 @@ class ModifyCSV():
 
         pass
 
-    #File to modify DataInputFiles\EPTIMO.csv
-    def eptimo(self, file_name: str, ext_file_name: str) -> None:
+    #File to modify DataInputFiles\EPTIMO_InventoryReport_20230412191230.csv
+    def eptimo(self, file_name: str) -> None:
         increase_price = 1.42
 
-        with open(f"{iv.input_path}{file_name}", mode='r', encoding = 'unicode_escape') as csv_fh, \
-                open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
-            for line in csv_fh:
-                mod_line = line.replace(',', '.').replace(';', ',')
-                tcsv_fh.write(mod_line)
-
-        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='r', encoding='unicode_escape') as temp_csv_fh, \
-             open(f"{iv.input_path}{ext_file_name}", mode='r', encoding='unicode_escape') as ext_csv_fh:
+        with open(f"{iv.input_path}{file_name}", mode='r', encoding='unicode_escape') as temp_csv_fh:
             dictReader_obj = csv.DictReader(temp_csv_fh)
-            dictReader_ext_obj = csv.DictReader(ext_csv_fh)
             sub_dict_list = []
             for item in dictReader_obj:
-                for eitem in dictReader_ext_obj:
-                    if item['ItemEAN'] == eitem['ItemEAN']:
-                        item['STOCK'] = int(float(eitem['AvailableQty']))
-                        sub_dict_list.append(item)
-                        break
-                    else:
-                        item['STOCK'] = 0
-                        sub_dict_list.append(item)
-                        break
-
-            for item in sub_dict_list:
-                nr = 1
-                if item['STOCK'] == 0:
-                    print (nr, item['ItemEAN'], item['STOCK'])
-                    nr += 1
+                sub_dict_list.append(item)
 
             msub_dict_list = []
             for item in sub_dict_list:
@@ -285,19 +263,21 @@ class ModifyCSV():
                     sub_dict['EAN'] = item['ItemEAN']
                     sub_dict['ITEM SKU'] = item['ItemPartNumber']
                     sub_dict['PRODUCT NAME'] = item['Name']
-                    sub_dict['BRAND NAME'] = item['BarndName']
-                    sub_dict['ORIGINAL PRICE'] = float(item['NetPrice'])
-                    sub_dict['REQUIRED PRICE TO AMAZON'] = float(item['NetPrice']) * increase_price
-                    # stock_value = int(item['stock'])
+                    sub_dict['BRAND NAME'] = item['BrandName']
+                    sub_dict['ORIGINAL PRICE'] = float(item['PriceNett'])
+                    sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett']) * increase_price, 2)
+                    sub_dict['STOCK'] = int(float(item['AvailableQty']))
 
-                    if sub_dict['REQUIRED PRICE TO AMAZON'] < threshold_price:
-                        sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * low_increase_price, 2)
-                    else:
-                        sub_dict['REQUIRED PRICE TO AMAZON'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] * large_increase_price, 2)
-                    
                     msub_dict_list.append(sub_dict)
                 except:
                     pass
+
+        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as mcsv_fh:
+            writer = csv.DictWriter(mcsv_fh, fieldnames=iv.csv_eptimo_head)
+            writer.writeheader()
+            writer.writerows(msub_dict_list)
+
+        pass
 
 
 
