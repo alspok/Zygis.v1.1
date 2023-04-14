@@ -18,8 +18,8 @@ def FileConvert():
     # FilterCSV().filterCSV()
     # FilterCSV().countCSV()
     # modifyCSV.fragnancesSelect("fragnances.csv", "BRAND")
-    modifyCSV.eptimo('EPTIMO_InventoryReport_20230412191230.csv')
-
+    # modifyCSV.eptimo('EPTIMO_InventoryReport_20230412191230.csv')
+    modifyCSV.novaengel("NOVAENGEL.csv")
 
 if __name__ == "__main__":
     FileConvert()

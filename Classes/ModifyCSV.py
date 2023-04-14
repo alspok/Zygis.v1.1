@@ -3,6 +3,8 @@ import csv
 import pprint
 from Classes.InitValues import InitValues as iv
 from xml.etree import ElementTree
+from Classes.Semicolumn import Semicolumn
+from Classes.ReadCSV import ReadCSV
 
 
 class ModifyCSV():
@@ -306,7 +308,11 @@ class ModifyCSV():
 
         pass
 
+    def novaengel(self, file_name: str) -> None:
+        output_file_name = Semicolumn().semicolumn(file_name)
+        sub_dict_list = ReadCSV().readCSV(output_file_name)
 
+        pass
 
 ################################################ XML modification ################################################
 
