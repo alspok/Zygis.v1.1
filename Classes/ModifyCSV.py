@@ -1,5 +1,4 @@
 import csv
-from collections import defaultdict
 # import xmltodict
 import pprint
 from Classes.InitValues import InitValues as iv
@@ -21,7 +20,7 @@ class ModifyCSV():
 
         msub_dict_list = []
         for item in sub_dict_list:
-            sub_dict = {}
+            sub_dict = dict()
             if item['EAN'] == '':
                 continue
             else:
@@ -63,7 +62,7 @@ class ModifyCSV():
 
         msub_dict_list = []
         for item in sub_dict_list:
-            sub_dict = {}
+            sub_dict = dict()
             if item['EAN/UPC'] == '':
                 continue
             else:
@@ -105,7 +104,7 @@ class ModifyCSV():
         
         msub_dict_list = []
         for item in sub_dict_list:
-            sub_dict = {}
+            sub_dict = dict()
             if item['EAN'] == '':
                 continue
             else:
@@ -181,7 +180,7 @@ class ModifyCSV():
 
             msub_dict_list = []
             for item in sub_dict_list:
-                sub_dict = {}
+                sub_dict = dict()
                 try:
                     sub_dict['EAN'] = item['ItemEAN']
                     sub_dict['ITEM SKU'] = item['ItemPartNumber']
@@ -208,7 +207,7 @@ class ModifyCSV():
         large_increase_price = 1.42 # if price less then thershold
 
         with open(f"{iv.input_path}{file_name}", mode='r', encoding = 'unicode_escape') as csv_fh, \
-                open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
+             open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as tcsv_fh:
             for line in csv_fh:
                 mod_line = line.replace(',', '.').replace(';', ',')
                 tcsv_fh.write(mod_line)
@@ -221,7 +220,7 @@ class ModifyCSV():
 
             msub_dict_list = []
             for item in sub_dict_list:
-                sub_dict = {}
+                sub_dict = dict()
                 try:
                     sub_dict['EAN'] = item['products_ean']
                     sub_dict['ITEM SKU'] = item['SKU']
@@ -249,6 +248,7 @@ class ModifyCSV():
     #File to modify DataInputFiles\EPTIMO_InventoryReport_20230412191230.csv
     def eptimo(self, file_name: str) -> None:
         increase_price = 1.42
+        available_qty = 5
 
         with open(f"{iv.input_path}{file_name}", mode='r', encoding='unicode_escape') as temp_csv_fh:
             dictReader_obj = csv.DictReader(temp_csv_fh)
@@ -258,7 +258,7 @@ class ModifyCSV():
 
             msub_dict_list = []
             for item in sub_dict_list:
-                sub_dict = defaultdict()
+                sub_dict = dict()
                 try:
                     sub_dict['EAN'] = item['ItemEAN']
                     sub_dict['ITEM SKU'] = item['ItemPartNumber']
@@ -266,14 +266,41 @@ class ModifyCSV():
                     sub_dict['BRAND NAME'] = item['BrandName']
                     sub_dict['ORIGINAL PRICE'] = float(item['PriceNett'])
                     sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett']) * increase_price, 2)
-                    sub_dict['STOCK'] = int(float(item['AvailableQty']))
-
-                    msub_dict_list.append(sub_dict)
+                    sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
+                    if int(float(item['AvailableQty'])) >= available_qty:
+                        sub_dict['STOCK'] = int(float(item['AvailableQty']))
+                        msub_dict_list.append(sub_dict)
+                    else:
+                        continue
                 except:
                     pass
 
         with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode='w', encoding='utf-8', newline='') as mcsv_fh:
             writer = csv.DictWriter(mcsv_fh, fieldnames=iv.csv_eptimo_head)
+            writer.writeheader()
+            writer.writerows(msub_dict_list)
+
+        with open(f"{iv.temp_output_path}{file_name}.temp.csv", mode="r", encoding='utf-8') as temp_csv_fh:
+            dictReader_obj = csv.DictReader(temp_csv_fh)
+            sub_dict_list = []
+            for item in dictReader_obj:
+                sub_dict_list.append(item)
+
+            msub_dict_list = []
+            for item in sub_dict_list:
+                sub_dict = dict()
+                try:
+                    sub_dict['EAN'] = item['EAN']
+                    sub_dict['ITEM SKU'] = item['ITEM SKU']
+                    sub_dict['PRODUCT NAME'] = item['PRODUCT NAME']
+                    sub_dict['BRAND NAME'] = item['BRAND NAME']
+                    sub_dict['REQUIRED PRICE TO AMAZON'] = float(item['REQUIRED PRICE TO AMAZON'])
+                    msub_dict_list.append(sub_dict)
+                except:
+                    pass
+
+        with open(f"{iv.output_path}{file_name}.mod.csv", mode='w', encoding='utf8', newline='') as mod_csv_fh:
+            writer = csv.DictWriter(mod_csv_fh, fieldnames=iv.csv_head)
             writer.writeheader()
             writer.writerows(msub_dict_list)
 

@@ -12,6 +12,15 @@ class InitValues():
         "REQUIRED PRICE TO AMAZON" 
     ]
 
+    #copy of csv_header
+    csv_head = [
+        "EAN",
+        "ITEM SKU",
+        "PRODUCT NAME",
+        "BRAND NAME",
+        "REQUIRED PRICE TO AMAZON" 
+    ]
+
     csv_action_pricelist_head = [
         "Manufacturer\'s code",
         "Name of product",
@@ -54,6 +63,7 @@ class InitValues():
         "BRAND NAME",
         "ORIGINAL PRICE",
         "REQUIRED PRICE TO AMAZON",
+        "PRICE DEVISION",
         "STOCK"
     ]
 
