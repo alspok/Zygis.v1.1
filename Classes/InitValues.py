@@ -67,6 +67,17 @@ class InitValues():
         "STOCK"
     ]
 
+    csv_temp_head = [
+        "EAN",
+        "ITEM SKU",
+        "PRODUCT NAME",
+        "BRAND NAME",
+        "ORIGINAL PRICE",
+        "REQUIRED PRICE TO AMAZON",
+        "PRICE DEVISION",
+        "STOCK"
+    ]
+
     merge_file_names = [
         "DataOutputFiles\\b2bindividuelllive_b2bexport1de.csv.mod.csv", # NOTEBOOKBILINGER
         "DataOutputFiles\\morele_offer.xml.mod.csv", # MORELE

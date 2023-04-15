@@ -5,7 +5,7 @@ from Classes.InitValues import InitValues as iv
 from xml.etree import ElementTree
 from Classes.Semicolumn import Semicolumn
 from Classes.ReadCSV import ReadCSV
-
+from Classes.WriteCSV import WriteCSV
 
 class ModifyCSV():
 
@@ -309,8 +309,48 @@ class ModifyCSV():
         pass
 
     def novaengel(self, file_name: str) -> None:
-        output_file_name = Semicolumn().semicolumn(file_name)
-        sub_dict_list = ReadCSV().readCSV(output_file_name)
+        increase_price = 1.42
+        available_qty = 5
+
+        temp_file_name = f"{iv.input_path}{file_name}"
+        temp_file_name = Semicolumn().semicolumn(temp_file_name) # 'DataOutputTempFiles\\NOVAENGEL.csv.csv'
+        sub_dict_list = ReadCSV().readCSV(temp_file_name)
+
+        msub_dict_list = []
+        for item in sub_dict_list:
+            sub_dict = dict()
+            try:
+                sub_dict['EAN'] = item['EAN']
+                sub_dict['ITEM SKU'] = item['\ufeffItemId']
+                sub_dict['PRODUCT NAME'] = item['Name']
+                sub_dict['BRAND NAME'] = item['Brand']
+                sub_dict['ORIGINAL PRICE'] = float(item['Price from 1 unit €'])
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['Price from 1 unit €']) * increase_price, 2)
+                sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
+                if int(item['Stock']) >= available_qty:
+                    sub_dict['STOCK'] = item['Stock']
+                    msub_dict_list.append(sub_dict)
+            except:
+                pass
+
+        mod_file_name = f"{iv.temp_output_path}{file_name}.temp"
+        WriteCSV().writeCSV(mod_file_name, msub_dict_list, iv.csv_temp_head)
+
+        msub_dict_list = []
+        for item in sub_dict_list:
+            sub_dict = dict()
+            try:
+                sub_dict['EAN'] = item['EAN']
+                sub_dict['ITEM SKU'] = item['\ufeffItemId']
+                sub_dict['PRODUCT NAME'] = item['Name']
+                sub_dict['BRAND NAME'] = item['Brand']
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['Price from 1 unit €']) * increase_price, 2)
+                msub_dict_list.append(sub_dict)
+            except:
+                pass
+
+        out_file_name = f"{iv.output_path}{file_name}.mod"
+        WriteCSV().writeCSV(out_file_name, msub_dict_list, iv.csv_head)
 
         pass
 
