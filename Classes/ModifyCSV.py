@@ -309,7 +309,7 @@ class ModifyCSV():
         pass
 
     def novaengel(self, file_name: str) -> None:
-        increase_price = 1.42
+        increase_price = 1.52
         available_qty = 5
 
         temp_file_name = f"{iv.input_path}{file_name}"
