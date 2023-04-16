@@ -321,7 +321,7 @@ class ModifyCSV():
             sub_dict = dict()
             try:
                 sub_dict['EAN'] = item['EAN']
-                sub_dict['ITEM SKU'] = item['\ufeffItemId']
+                sub_dict['ITEM SKU'] = item['ItemId'] #'\ufeffItemId'
                 sub_dict['PRODUCT NAME'] = item['Name']
                 sub_dict['BRAND NAME'] = item['Brand']
                 sub_dict['ORIGINAL PRICE'] = float(item['Price from 1 unit €'])
@@ -341,7 +341,7 @@ class ModifyCSV():
             sub_dict = dict()
             try:
                 sub_dict['EAN'] = item['EAN']
-                sub_dict['ITEM SKU'] = item['\ufeffItemId']
+                sub_dict['ITEM SKU'] = item['ItemId'] #'\ufeffItemId'
                 sub_dict['PRODUCT NAME'] = item['Name']
                 sub_dict['BRAND NAME'] = item['Brand']
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['Price from 1 unit €']) * increase_price, 2)
@@ -353,6 +353,52 @@ class ModifyCSV():
         WriteCSV().writeCSV(out_file_name, msub_dict_list, iv.csv_head)
 
         pass
+
+    def ab_pl(self, file_name: str) -> None:
+        increase_price = 1.42
+
+        temp_file_name = f"{iv.input_path}{file_name}"
+        temp_file_name = Semicolumn().semicolumn(temp_file_name) # AB_PL.csv.csv
+        sub_dict_list = ReadCSV().readCSV(temp_file_name)
+
+        msub_dict_list = []
+        for item in sub_dict_list:
+            sub_dict = dict()
+            try:
+                sub_dict['EAN'] = item['EAN']
+                sub_dict['ITEM SKU'] = item['SKU']
+                sub_dict['PRODUCT NAME'] = item['TITLE']
+                sub_dict['BRAND NAME'] = item['BRAND']
+                sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
+                sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
+                msub_dict_list.append(sub_dict)
+            except:
+                pass
+
+        mod_file_name = f"{iv.temp_output_path}{file_name}.temp"
+        key_list_head = list(sub_dict.keys())
+        WriteCSV().writeCSV(mod_file_name, msub_dict_list, key_list_head)
+
+        msub_dict_list = []
+        for item in sub_dict_list:
+            sub_dict = dict()
+            try:
+                sub_dict['EAN'] = item['EAN']
+                sub_dict['ITEM SKU'] = item['SKU']
+                sub_dict['PRODUCT NAME'] = item['TITLE']
+                sub_dict['BRAND NAME'] = item['BRAND']
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
+                msub_dict_list.append(sub_dict)
+            except:
+                pass
+
+        mod_file_name = f"{iv.output_path}{file_name}.mod"
+        key_list_head = list(sub_dict.keys())
+        WriteCSV().writeCSV(mod_file_name, msub_dict_list, key_list_head)
+
+        pass
+
 
 ################################################ XML modification ################################################
 
