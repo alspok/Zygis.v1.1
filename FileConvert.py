@@ -1,7 +1,6 @@
 from Classes.ModifyCSV import ModifyCSV
 from Classes.MergeFiles import MergeFiles
 from Classes.FilterCSV import FilterCSV
-from Classes.InitValues import InitValues as iv
 
 def FileConvert():
     modifyCSV = ModifyCSV()
@@ -21,7 +20,8 @@ def FileConvert():
     # modifyCSV.eptimo('EPTIMO_InventoryReport_20230412191230.csv')
     # modifyCSV.novaengel("NOVAENGEL.csv")
     # modifyCSV.novaengel("NOVAENGEL_NAUJAS.csv")
-    modifyCSV.ab_pl(("AB_PL.csv"))
+    # modifyCSV.ab_pl("AB_PL.csv")
+    modifyCSV.skorpionas("SKORPIONAS.csv")
 
 if __name__ == "__main__":
     FileConvert()
