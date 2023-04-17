@@ -250,6 +250,7 @@ class ModifyCSV():
     #File to modify DataInputFiles\EPTIMO_InventoryReport_20230412191230.csv
     def eptimo(self, file_name: str) -> None:
         increase_price = 1.42
+        limit_price = 15
         available_qty = 5
 
         temp_file_name = f"{iv.input_path}{file_name}"
@@ -267,7 +268,7 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PriceNett'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['PriceNett']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                if int(float(item['AvailableQty'])) >= available_qty:
+                if int(float(item['AvailableQty'])) >= available_qty and int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
                     sub_dict['STOCK'] = int(float(item['AvailableQty']))
                     msub_dict_list.append(sub_dict)
                 else:
@@ -304,6 +305,7 @@ class ModifyCSV():
 
     def novaengel(self, file_name: str) -> None:
         increase_price = 1.52
+        limit_price = 15
         available_qty = 5
 
         temp_file_name = f"{iv.input_path}{file_name}"
@@ -323,7 +325,7 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['Price from 1 unit â\x82¬'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['Price from 1 unit â\x82¬']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                if int(item['Stock']) >= available_qty:
+                if int(item['Stock']) >= available_qty and int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
                     sub_dict['STOCK'] = item['Stock']
                     msub_dict_list.append(sub_dict)
             except:
@@ -354,6 +356,7 @@ class ModifyCSV():
 
     def ab_pl(self, file_name: str) -> None:
         increase_price = 1.42
+        limit_price = 100
 
         temp_file_name = f"{iv.input_path}{file_name}"
         temp_file_name = Semicolumn().semicolumn(temp_file_name) # AB_PL.csv.csv
@@ -370,7 +373,8 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                msub_dict_list.append(sub_dict)
+                if int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
+                    msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -400,6 +404,7 @@ class ModifyCSV():
 
     def skorpionas(self, file_name: str) -> None:
         increase_price = 1.48
+        limit_price = 100
 
         temp_file_name = f"{iv.input_path}{file_name}"
         temp_file_name = Semicolumn().semicolumn(temp_file_name) # AB_PL.csv.csv
@@ -416,7 +421,8 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                msub_dict_list.append(sub_dict)
+                if sub_dict['REQUIRED PRICE TO AMAZON'] >= limit_price:
+                    msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -445,6 +451,7 @@ class ModifyCSV():
 
     def elko(self, file_name: str) -> None:
         increase_price = 1.42
+        limit_price = 100
 
         temp_file_name = f"{iv.input_path}{file_name}"
         temp_file_name = Semicolumn().semicolumn(temp_file_name) # AB_PL.csv.csv
@@ -461,7 +468,8 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                msub_dict_list.append(sub_dict)
+                if int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
+                    msub_dict_list.append(sub_dict)
             except:
                 pass
 
