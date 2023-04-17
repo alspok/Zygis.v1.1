@@ -87,19 +87,19 @@ class InitValues():
     # merge_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.merge.csv"
     # filter_file_name = "MergeFiles\\b2b_morele_prodcat_stockexport.filter.csv"
 
-    merge_file_list = [
-        "DataOutputFiles\\NOVAENGEL.csv.mod",
-        "DataOutputFiles\\EPTIMO_InventoryReport_20230412191230.csv.mod"
-    ]
-    merge_file = "NOVAENGEL_EPTIMO_InventoryReport_20230412191230.csv.merge"
-
-
-    # merge_file_list =[
-    #     "DataOutputFiles\\AB_PL.csv.mod",
-    #     "DataOutputFiles\\SKORPIONAS.csv.mod",
-    #     "DataOutputFiles\\ELKO.csv.mod"
+    # merge_file_list = [
+    #     "DataOutputFiles\\NOVAENGEL.csv.mod",
+    #     "DataOutputFiles\\EPTIMO_InventoryReport_20230412191230.csv.mod"
     # ]
-    # merge_file = "AB_PL_SKORPIONAS_ELKO.csv.merge"
+    # merge_file = "NOVAENGEL_EPTIMO_InventoryReport_20230412191230.csv.merge"
+
+
+    merge_file_list =[
+        "DataOutputFiles\\AB_PL.csv.mod",
+        "DataOutputFiles\\SKORPIONAS.csv.mod",
+        "DataOutputFiles\\ELKO.csv.mod"
+    ]
+    merge_file = "AB_PL_SKORPIONAS_ELKO.csv.merge"
 
     min_stock = 2
     min_price = 5.0

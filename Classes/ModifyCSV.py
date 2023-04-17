@@ -373,8 +373,7 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                if int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
-                    msub_dict_list.append(sub_dict)
+                msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -391,7 +390,8 @@ class ModifyCSV():
                 sub_dict['PRODUCT NAME'] = item['TITLE']
                 sub_dict['BRAND NAME'] = item['BRAND']
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
-                msub_dict_list.append(sub_dict)
+                if int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
+                    msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -421,8 +421,7 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                if sub_dict['REQUIRED PRICE TO AMAZON'] >= limit_price:
-                    msub_dict_list.append(sub_dict)
+                msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -439,7 +438,8 @@ class ModifyCSV():
                 sub_dict['PRODUCT NAME'] = item['TITLE']
                 sub_dict['BRAND NAME'] = item['BRAND']
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
-                msub_dict_list.append(sub_dict)
+                if int(sub_dict['REQUIRED PRICE TO AMAZON'] >= limit_price):
+                    msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -468,8 +468,7 @@ class ModifyCSV():
                 sub_dict['ORIGINAL PRICE'] = float(item['PRICE'])
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
-                if int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
-                    msub_dict_list.append(sub_dict)
+                msub_dict_list.append(sub_dict)
             except:
                 pass
 
@@ -486,7 +485,8 @@ class ModifyCSV():
                 sub_dict['PRODUCT NAME'] = item['TITLE']
                 sub_dict['BRAND NAME'] = item['BRAND']
                 sub_dict['REQUIRED PRICE TO AMAZON'] = round(float( item['PRICE']) * increase_price, 2)
-                msub_dict_list.append(sub_dict)
+                if int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
+                    msub_dict_list.append(sub_dict)
             except:
                 pass
 
