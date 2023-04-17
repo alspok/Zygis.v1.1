@@ -3,16 +3,18 @@ import pandas as pd
 
 class MergeFiles():
 
-    def mergeFiles(self) -> None:
+    def mergeFiles(self, merge_files: list) -> None:
         file_count = True
-        for file in iv.merge_file_names:
+        for file in iv.merge_files:
             if file_count:
-                with open(file, mode='r', encoding='utf-8') as fh, open(iv.merge_file_name, mode='w', encoding='utf-8') as mfh:
+                with open(file, mode='r', encoding='latin-1') as fh, \
+                     open(iv.merge_file_name, mode='w', encoding='latin', newline='') as mfh:
                     mfile = fh.read()
                     mfh.write(mfile)
                     file_count = False
             else:
-                with open(file, mode='r', encoding='utf-8') as fh, open(iv.merge_file_name, mode='a', encoding='utf-8', newline='') as mfh:
+                with open(file, mode='r', encoding='latin-1') as fh, \
+                     open(iv.merge_file_name, mode='a', encoding='latin-1', newline='') as mfh:
                     for line in fh:
                         if "ITEM SKU" in line and "BRAND NAME" in line:
                             continue
