@@ -20,9 +20,10 @@ def FileConvert():
     # FilterCSV().countCSV()
     # modifyCSV.fragnancesSelect("fragnances.csv", "BRAND")
     # modifyCSV.eptimo('EPTIMO_InventoryReport_20230412191230.csv')
-    # modifyCSV.novaengel("NOVAENGEL.csv")
+    modifyCSV.novaengel("NOVAENGEL.csv")
     # modifyCSV.novaengel("NOVAENGEL.csv")
     # modifyCSV.ab_pl("AB_PL.csv")
+    # modifyCSV.skorpionas("SKORPIONAS.csv")
     # modifyCSV.elko("ELKO.csv")
 
     MergeFilter().mergeFilter(iv.merge_file_list)

@@ -7,7 +7,8 @@ class Semicolumn():
              open (f"{output_file_name}", mode='w', encoding='utf-8', newline='') as ccsv_fh:
             
             for line in scsv_fh:
-                mod_line = line.replace(',', '.').replace(';', ',').replace('Û', '€')
+                # mod_line = line.replace(',', '.').replace(';', ',').replace('Û', '€')
+                mod_line = line.replace(',', '.').replace(';', ',')
                 ccsv_fh.write(mod_line)
         
         return f"{output_file_name}"

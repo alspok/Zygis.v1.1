@@ -318,12 +318,12 @@ class ModifyCSV():
             sub_dict = dict()
             try:
                 sub_dict['EAN'] = item['EAN']
-                sub_dict['ITEM SKU'] = item['ï»¿ItemId'] #'\ufeffItemId'
+                sub_dict['ITEM SKU'] = item['\ufeffItemId'] #'\ufeffItemId'
                 sub_dict['PRODUCT NAME'] = item['Name']
                 sub_dict['BRAND NAME'] = item['Brand']
 
-                sub_dict['ORIGINAL PRICE'] = float(item['Price from 1 unit â\x82¬'])
-                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['Price from 1 unit â\x82¬']) * increase_price, 2)
+                sub_dict['ORIGINAL PRICE'] = float(item['Price from 1 unit €'])
+                sub_dict['REQUIRED PRICE TO AMAZON'] = round(float(item['Price from 1 unit €']) * increase_price, 2)
                 sub_dict['PRICE DEVISION'] = round(sub_dict['REQUIRED PRICE TO AMAZON'] / sub_dict['ORIGINAL PRICE'], 2)
                 if int(item['Stock']) >= available_qty and int(sub_dict['REQUIRED PRICE TO AMAZON']) >= limit_price:
                     sub_dict['STOCK'] = item['Stock']
