@@ -13,12 +13,14 @@ class ModifyCSV():
 
     # File to modify DataInputFiles\Action_PriceList_2_1_2023_EN.csv
     def actionPrice(self, file_name: str) -> None:
-        with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh:
-            dictReader_obj = csv.DictReader(csv_fh)
-            sub_dict_list = []
-            for item in dictReader_obj:
-                if float(item['Net price EUR']) >= iv.min_price:
-                    sub_dict_list.append(item)
+        # with open(f"{iv.input_path}{file_name}", mode='r', encoding='utf-8') as csv_fh:
+        #     dictReader_obj = csv.DictReader(csv_fh)
+        #     sub_dict_list = []
+        #     for item in dictReader_obj:
+        #         if float(item['Net price EUR']) >= iv.min_price:
+        #             sub_dict_list.append(item)
+        temp_file_name = f"{iv.input_path}{file_name}"
+        sub_dict_list = ReadCSV().readCSV(temp_file_name)
 
         msub_dict_list = []
         for item in sub_dict_list:
